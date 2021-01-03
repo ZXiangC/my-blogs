@@ -25,12 +25,5 @@
   * [Mysql](zh-cn/configuration.md)
   * [Oracle](zh-cn/themes.md)
 
-*  Chen
-  * [Mysql](zh-cn/configuration.md)
-  * [Oracle](zh-cn/themes.md)
-
-*  Xiang
-  * [Mysql](zh-cn/configuration.md)
-  * [Oracle](zh-cn/themes.md)
 
 
