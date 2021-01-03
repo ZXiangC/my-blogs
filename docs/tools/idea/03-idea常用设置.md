@@ -1,0 +1,1 @@
+**设置不自动检测更新**   File->setting->Apper&&Be->Update->取消勾选
