@@ -112,6 +112,13 @@ git pull --rebase origin master
 ### Git 版本控制
 #### 1 直接回退到上一个版本
 [回退到上一个版本](https://blog.csdn.net/hehyyoulan/article/details/93193562)
+
+### 五 tortoiseGit 使用
+
+[tortoiseGit 上传代码到github](https://www.cnblogs.com/hjvsdr/p/7152141.html)
+
+
+
 ## Git 错误解决方法
 ### 错误1 
 [Push rejected: Push to origin/master was rejected](https://blog.csdn.net/lzf1759891062/article/details/82222011)
