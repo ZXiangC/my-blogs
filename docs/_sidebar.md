@@ -24,3 +24,7 @@
 *  HS
   * [Mysql](zh-cn/configuration.md)
   * [Oracle](zh-cn/themes.md)
+
+*  test
+  * [Mysql](zh-cn/configuration.md)
+  * [Oracle](zh-cn/themes.md)
