@@ -49,3 +49,4 @@
 第二步: 按住 Ctrl+Shift+P   搜索 configure language  选择zh-cn
 
 ![image-20210106002652566](https://gitee.com/ZXiangC/picture/raw/master/img/image-20210106002652566.png)
+
