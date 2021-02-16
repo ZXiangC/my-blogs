@@ -164,3 +164,139 @@ git pull --rebase origin master
   }
 </style>
 ```
+
+https://gitee.com/ZXiangC/picture/raw/master/imgs/image-20210104220203502.png
+
+![image-20210104220310668](https://gitee.com/ZXiangC/picture/raw/master/imgs/image-20210104220310668.png)
+
+```vue
+<template>
+  <div>
+    <br />
+    <!-- 数据展示 -->
+    <el-table :data="list" style="width: 100%">
+      <el-table-column label="序号" width="180">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">
+            {{ (page - 1) * limit + scope.$index + 1 }}</span
+          >
+        </template>
+      </el-table-column>
+      <el-table-column label="姓名" width="180">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="讲师简介" width="180">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.intro }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="讲师资历" width="180">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.career }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="讲师头衔" width="180">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{
+            scope.row.level == 1 ? "高级讲师" : "首席讲师"
+          }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <!-- 分页条 -->
+    <!-- 分页 -->
+    <el-pagination
+      :current-page="page"
+      :page-size="limit"
+      :total="total"
+      style="padding: 30px 0; text-align: center"
+      layout="total, prev, pager, next, jumper"
+      @current-change="pageCurrentChange"
+    />
+  </div>
+</template>
+
+<script >
+import teacher from "@/api/edu/teacher1";
+
+export default {
+  // 定义变量双重绑定
+  data() {
+    return {
+      list: null,
+      pojo: null,
+      page: 1,
+      limit: 2,
+      total: null,
+      searchMap: {},
+    };
+  },
+
+  created() {
+    this.getTeacherPageList();
+  },
+
+  methods: {
+    /**
+     * 取值函数
+     *  */
+    getTeacherPageList() {
+     // alert(this.page + "----------" + this.limit);
+      teacher.search(this.page, this.limit, this.searchMap).then((res) => {
+        this.list = res.data.rows;
+        this.total = res.data.total;
+        //console.log(this.list);
+        //console.log(this.total);
+      });
+    },
+    /**
+     * 操作处理函数
+     */
+    handleEdit(index, row) {
+      this.pojo = teacher.findByid(row.id).then((res) => {
+        this.pojo = res.data.teacher;
+
+        console.log(this.pojo);
+      });
+
+      //console.log(index, row);
+    },
+
+
+    handleDelete(id) {
+      this.$confirm("此操作将删除讲师记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        teacher.deleteById(id).then((res) => {
+          this.$message({
+            type: res.success == 1 ? "success" : "error",
+            message: res.message,
+          });
+          // 回到查询页面
+          this.getTeacherList();
+        });
+      });
+    },
+  },
+};
+</script>
+```
+

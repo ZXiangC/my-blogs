@@ -17,6 +17,9 @@
   * [SpringMVC](zh-cn/language-highlight.md)
   * [SpringBoot](zh-cn/language-highlight.md)
 
+- 项目
+  - [谷粒商城](item/guli/_sidebar.md)
+
 * 数据库
   * [Mysql](zh-cn/configuration.md)
   * [Oracle](data-base/oracle/_sidebar.md)
