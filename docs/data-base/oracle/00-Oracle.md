@@ -1226,7 +1226,7 @@ alter system kill session '17, 15453';
 > 注意：要查看kill的session 是否是自己的，防止kill他人的进程。
 
 ### 3 连接不了Oracle 数据库
-#### 1 Listener 配置文件
+#### 3.1 Listener 配置文件
 
 ```sql
 -- 2020-10-28 号配置
@@ -1263,7 +1263,7 @@ ADR_BASE_LISTENER = E:\oracle\oracle_home
 
 ```
 
-#### 2 tnsnames
+#### 3.2 tnsnames
 
 ```sql
 
@@ -1290,4 +1290,17 @@ ORCL =
     )
   )
 ```
+
+### 4 用户名、密码忘了
+
+#### 4.1 步骤
+
+- 第一步：cmd 打开窗口
+- 第二步：输入：sqlplus /nolog
+- 第三步：输入：connect  /as sysdba
+- 第四步：修改用户名密码： alter user sys identified by chen1996;
+
+ ####  4.2 截图
+
+![image-20210311230855508](https://gitee.com/ZXiangC/picture/raw/master/imgs/image-20210311230855508.png)
 
