@@ -1203,6 +1203,9 @@ select userenv('language') from dual;
 select * from v$nls_parameters a where a.PARAMETER = 'NLS_CHARACTERSET';
 -- 查询客户端编码
 select * from v$nls_parameters
+
+-- 查询服务端编码
+select * from nls_database_parameters t where t.PARAMETER = 'NLS_CHARACTERSET';
 ```
 
 > 然后修改本机环境变量，和数据库服务端保持一致就可以！

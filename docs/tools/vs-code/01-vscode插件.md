@@ -24,7 +24,7 @@
 - （3）括号匹配：安装这两个插件 
 
   - Bracket Pair Colorizer 
-- Indent Rainbo 
+  -  Indent Rainbo
 
 ### Vue 插件
 
@@ -50,4 +50,3 @@
 
 ![image-20210106002652566](https://gitee.com/ZXiangC/picture/raw/master/img/image-20210106002652566.png)
 
-ceyichahah

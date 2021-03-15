@@ -23,10 +23,10 @@
 * 数据库
   * [Mysql](zh-cn/configuration.md)
   * [Oracle](data-base/oracle/_sidebar.md)
-
-* HS
-  * [Mysql](zh-cn/configuration.md)
-  * [Oracle](zh-cn/themes.md)
+  
+*  company
+  * [hs](zh-cn/configuration.md)
+  * [思特沃克](zh-cn/themes.md)
 
 
 
