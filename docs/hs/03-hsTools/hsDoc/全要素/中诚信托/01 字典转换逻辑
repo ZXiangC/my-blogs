@@ -1,0 +1,42 @@
+### 1 AM 中逻辑
+
+![image-20201209100704824](01%20%E5%AD%97%E5%85%B8%E8%BD%AC%E6%8D%A2%E9%80%BB%E8%BE%91.assets/image-20201209100704824.png)
+
+### 2 AM 转换
+
+```sql
+UPDATE TRPT_TPROJFULLFACTOR_HSAM T
+      SET (T.C_PINDUSTRYDTL, T.C_RINDUSTRYDTL) =
+          (SELECT (SELECT T1.C_CONTRAST
+                     FROM TSYS_DICT_TREE T1
+                    WHERE T.C_PINDUSTRYDTL = T1.C_DICT_ITEM_CODE
+                      AND T1.C_DICT_ENTRY_CODE = 'T0010') C_PINDUSTRYDTL,
+                  (SELECT T2.C_CONTRAST
+                     FROM TSYS_DICT_TREE T2
+                    WHERE T.C_RINDUSTRYDTL = T2.C_DICT_ITEM_CODE
+                      AND T2.C_DICT_ENTRY_CODE = 'T0010') C_RINDUSTRYDTL
+             FROM DUAL)
+    WHERE T.D_DATE = V_D_DATE;
+```
+
+###  3 TUSP 逻辑 （ V_PINDUSTRYDTL中诚配置的为  0 ）
+
+```sql
+CASE WHEN V_PINDUSTRYDTL = 0 THEN --来源资管
+                    CASE WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'F%' THEN 'H'
+                         WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'G%' THEN 'F'
+                         WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'H%' THEN 'I'
+                         WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'I%' THEN 'G'
+                         WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'U%' THEN 'Z'
+                         WHEN UPPER(AM.C_PINDUSTRYDTL) LIKE 'V%' THEN 'Z'
+                         WHEN AM.C_PINDUSTRYDTL IS NULL          THEN 'Z'
+                         ELSE SUBSTR(AM.C_PINDUSTRYDTL,1,1)
+                    END
+
+               WHEN V_PINDUSTRYDTL = 1 THEN --来源项目要素
+                    PM.C_INDUSTRYDTL1
+               WHEN V_PINDUSTRYDTL = 2 THEN --来源资管 字典无需转换
+                    SUBSTR(AM.C_PINDUSTRYDTL,1,1)
+          END  C_PINDUSTRYDTL_1,
+```
+

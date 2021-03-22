@@ -1,0 +1,104 @@
+数据来源  
+
+- **(1) 外部接口 V_FADATASOURCE  in(1,2)**  
+
+  - 是否按照子项目统计分为两段，然后将两段Union all
+
+- **(2) 恒生基础数据库（0 【默认】）** 
+- 第一段：--1.2.1 先生成FA临时表:代保管项目统计方式【这段暂时不看】
+- 第二段：
+-   --1.2.2 全要素分拆逻辑参数[TTF_SPLITLOGIC]，来生成TEMP_TTF_FAZC临时表
+- 第三段：
+
+  - -- 1.2.3.1 生成TEMP_TTF_FASY临时表【HSSTG.TPROJECT_FUNDINFO】
+
+  - -- 1.2.3.2外币处理。
+- 第四段： 1.2.4 向【TRPT_TPROJFULLFACTOR_HSFA】表中插入数据。
+
+  -  -- 1.2.4.2 其他走基础数据库。
+     - 1 统计资产
+     - 2 统计收益
+- 第五段： 1.2.5 更新“存续天数+日均规模+其他费用率”:
+
+  -  --1.2.5.1 根据TEMP_TTF_FASY的实收信托变动，来生成实收信托余额临时表: TMP_BALANCE
+  - --1.2.5.2 根据临时表来更新日均规模
+  - --1.2.5.3 根据项目接口表来更新FA接口表的：存续天数、日均规模
+  -  --1.2.5.4 更新：年化其他费用率(日均收益*365)
+
+科目代码 || 交易对手编号。是AM+ FA 段的原因。
+
+
+
+
+
+AM ：拆分FA 资产。
+
+AM 数据不全，所以要以FA 帐为准。
+
+
+
+临时表中数据:
+
+> TEMP_TTF_FASY:  **FA 收益**
+>
+> - F_SSXT_FA : 实收信托FA.
+> - F_SSXT_DY: 单一
+> - F_SSXT_JH : 集合
+> - F_SSXT_CCQ : 财产权。
+> - F_TRUSTPAY ：报酬率。
+> - F_OTHERFEE： 其他费用。
+>
+> TEMP_TTF_FAAC:
+>
+> -  D_DATE,C_FUNDID,C_FUNDCODE,C_SUBPROJCODE,C_PRODCODE,C_PROJCODE : 基本信息。
+>
+>   -------------------------------
+>
+> - f_balance  : 贷方- 借方
+>
+> - f_zcye  ： C_PRODCODE 相同产品 balance 汇总。
+>
+> - C_YYFS ：运用方式
+> - C_TX：投向
+> - C_RIVALID,C_RIVALNAME,C_PACTID,C_JYDSID  ：交易对手，合同信息。
+> - 证券信息。
+
+###  temp_hsfa_vouchers
+
+- 信托产品
+- 账套
+- 科目
+- 证券类别
+- 运用方式，投向
+
+### temp_ttf_fazc
+
+- 运用方式，投向
+- f_balance  金额，f_zcye
+- 证券类别。
+- 交易对手合同。
+
+
+
+TRPT_TPROJFULLFACTOR_HSFA
+
+- TEMP_TTF_FAZC
+- TEMP_TTF_FASY
+
+### 核心表一： TEMP_HSFA_VOUCHERS
+
+- FA_VOUCHERS
+- FA_FUNDINFO
+- TA_FUNDINFO
+
+### 核心表二：TEMP_TTF_FAZC
+
+- 方式一：AM+FA   
+  - **TEMP_HSFA_VOUCHERS**
+- 方式二： 按照对手合同：
+  - TEMP_TTF_FAZC_SUB
+    - **TEMP_HSFA_VOUCHERS**
+    - **FA_FUNDINFO**
+    - **TA_FUNDINFO**
+
+- 

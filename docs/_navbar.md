@@ -7,6 +7,7 @@
   * [Idea](tools/idea/_sidebar.md)
   * [Vs_code](tools/vs-code/_sidebar.md)
   * [Git](tools/git/_sidebar.md)
+  * [others](tools/others/_sidebar.md)
 
 * Java
   * [java基础](zh-cn/configuration.md)
@@ -25,8 +26,10 @@
   * [Oracle](data-base/oracle/_sidebar.md)
   
 *  company
-  * [hs](zh-cn/configuration.md)
-  * [思特沃克](zh-cn/themes.md)
+  * [hs](hs/_sidebar.md)
+  * [斯特沃克](hs/_sidebar.md) 
+    
+  
 
 
 

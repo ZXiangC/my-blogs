@@ -1,0 +1,214 @@
+
+
+
+
+### 1 TCMP 项目排查思路
+
+![image-20201223152831977](02%20TCMP.assets/image-20201223152831977.png)
+
+#### 1 确定走那一段
+
+- 1 是否代保管
+- 2 是否按照子项目
+
+```sql
+-- 代保管项目统计方式  1 统计到表外 【一般都是】  0 统计到表内   （表内指的是需要在全要素报表中展示）
+ SELECT * FROM TSYS_PARAMETER WHERE UPPER(PARAM_CODE) = '1104_DBGXMTJFS';
+ 
+ -- 项目统计方式  0 表示按照【项目】统计   1 表示 按照【子项目】统计
+ SELECT * FROM TSYS_PARAMETER WHERE UPPER(PARAM_CODE) = 'TTF_ISSUBPROJECT'; 
+```
+
+#### 2 确定baseInfo 中数据
+
+- TDC 版
+
+```sql
+SELECT 
+ '0' C_ISSUBPROJECT, -- 是否子项目
+ TP.C_PROJCODE C_PRODCODE, -- 产品编号和项目编号相同
+ TP.*,  -- 项目所有信息
+ '' C_SUBPROJCODE, -- 子项目
+ -- 结束日期
+ TO_DATE('2099-12-31','YYYY-MM-DD') C_CREATETIME,
+ TC.D_BDATE,
+ null L_SIT_UMBERLLA_NUM
+FROM HSTDC.PM_PROJECTINFO TP,
+    (SELECT C.C_PROJCODE C_PROJECTCODE,
+            MIN(C.D_SETUPDATE) D_BDATE
+     FROM HSTDC.PM_PROJECTCOL C GROUP BY C.C_PROJCODE
+     ) TC
+WHERE TP.C_PROJCODE = TC.C_PROJECTCODE
+ AND TP.L_BUSISCOPE = '1' --项目标识 (1信托/2固有)
+ --AND TP.C_IS1104 = '1' --是否1104报送
+ AND TP.L_ISSUBMIT = '1' --是否报送 1-是 0-否
+ AND TP.C_PROJPHASE > '30' --项目阶段30成立
+ AND TP.C_PROJSTATUS NOT IN('90','99') --项目状态90冻结 99失效
+ AND TC.D_BDATE <= date'2020-10-30' --成立日期 <= 报送日期
+ --AND V_ISSUBPROJECT = '0' --非子项目
+ AND NVL(TP.D_ENDDATE,TO_DATE('2099-12-31','YYYY-MM-DD')) > date '2020-10-30' --到期日期 > 报送日期
+ --AND V_DBGXMTJFS = 1 --不统计代保管项目
+```
+
+- STG 版
+
+```sql
+SELECT '0' C_ISSUBPROJECT,
+        TP.C_PROJECTCODE C_PRODCODE,
+        TP.*,
+        '' C_SUBPROJCODE,
+                       
+                      --TO_DATE(NVL(NVL(TP.C_ENDDATE,TP.C_PRESTOPDATE),'2099-12-31'),'YYYY-MM-DD') D_EDATE,/*NULL D_ENDDATE,*/
+        TO_DATE('2099-12-31','YYYY-MM-DD') C_CREATETIME,
+        TC.D_BDATE,
+        tp.l_subumbrellanum L_SIT_UMBERLLA_NUM
+ FROM HSSTG.TPROJECT_INFO TP,
+      (SELECT C_PROJECTCODE,MIN(D_SETUPDATE) D_BDATE FROM HSSTG.TPROJECT_COLLECT GROUP BY C_PROJECTCODE) TC  ,
+ (SELECT C_PROJECTCODE, MAX(C_ENDDATE) C_ENDDATE from
+                                   HSSTG.TPROJECT_FUNDINFO   GROUP BY C_PROJECTCODE
+       ) P
+ WHERE TP.C_PROJECTCODE = TC.C_PROJECTCODE
+AND  TC.C_PROJECTCODE= P.C_PROJECTCODE
+   AND TP.C_INTRUSTFLAG = '1' --项目标识 (1信托/2固有)
+   AND TP.C_IS1104 = '1' --是否1104报送
+   AND TP.C_ISDECLARE = '1' --是否报送 1-是 0-否
+   AND TP.C_PROJECTPHASE > '30' --项目阶段30成立
+   AND TP.C_PROJECTSTATUS NOT IN('90','99') --项目状态90冻结 99失效
+   AND TC.D_BDATE <= date '2020-12-31' --成立日期 <= 报送日期
+   --AND V_ISSUBPROJECT = '0' --非子项目
+   AND TO_DATE(NVL(TP.C_ENDDATE,'2099-12-31'),'YYYY-MM-DD') > date '2020-12-31' --到期日期 > 报送日期
+   --AND V_DBGXMTJFS = 1 --不统计代保管项目
+```
+
+
+
+#### 3 确定DTl 中数据
+
+```sql
+select T1.C_PROJCODE C_PROJECTCODE,
+            T1.C_SUBPROJCODE,
+            T1.C_PRODCODE,
+            '' C_MAINFUNDCODE,
+            T1.C_ISSUBPROJECT,
+            T1.C_ACCOUNTANT,
+            T1.C_TMANAGER C_TRUSTMANAGER,
+            T1.C_TMANAGERB C_TRUSTMANAGER_B,
+            T1.C_LEADERSHIP C_CHARGELEAD,
+            T1.C_DPTID,
+            '' C_PROMANAGEFLG,
+            '' C_NONCLEANPLAN,
+            T1.L_INDUSTRY C_INVESTINDUSTRY,
+            T1.L_STRUCFLAG C_STRUCTFLAG,
+            T1.C_ISSUNPRIVATE C_ISSUNPRIVATE,
+            T1.L_ISUMBERLLA C_ISUMBRELLATRUST,
+            T1.L_SIT_UMBERLLA_NUM,
+            '' C_ISEXTWAREHOUSE,
+            T1.C_INVESTPROP  C_STOCKORDEBT,
+            '' L_OTHERRATES,
+            T1.C_SPECIALTY C_SPECIALBUSINTYPE,
+            '' C_SETPREDICTYIELD,
+            T1.L_ISCASH C_ISCASHMANAGER,
+            --T1.C_INTERNALRISKSORT,
+            --T1.C_CHANNELRESPSORT,
+            T1.C_PROJSOURCE C_PROJECTCOOSOURCE,
+            --T1.C_PROJSOURCE C_PROJECTSOURCES,
+            '' C_ACCOUNTNUMBER,
+            '' c_extfield13,
+            T1.F_TRUSTPAYRATE C_MANAGERFEE,
+            '' C_TRUSTREWARDTYPE,
+            T1.L_TRUSTPAYTYPE C_TRUSTPAYTYPE,
+            T1.F_MINPREYIELD C_PREDICTMINYIELD,
+            --T1.C_EXTFIELD10,
+            to_char(T1.l_yieldtype)  C_PREDICTTYPE,
+            T1.C_CYKIND C_MONEYTYPE,
+            T1.L_ISCASH,
+            T1.L_MANAGEMODE C_MANAGETYPE,
+            T1.c_isopenend L_RUNMODE ,
+            T1.C_COOPBIT C_COOTYPE,
+            T1.C_TRUSTCLASS,
+            T1.L_SINGLESET,
+            --T1.C_PROJECTPROPERTYTYPE,
+            --T1.C_PROJECTTYPE,
+            T1.L_FUNCTYPE C_FUNTYPE,
+            case when V_PROJECTDATESOURCE = '1' then NVL(T2.D_SETUPDATE,T1.D_BDATE)
+                 ELSE T1.D_BDATE
+             END                                                                                             D_BDATE,
+            case when V_PROJECTDATESOURCE = '1' AND T1.D_ENDDATE IS NULL THEN NVL(T2.D_ENDDATE,T1.D_EDATE)
+                 ELSE T1.D_EDATE
+             END                                                                                             D_EDATE,
+            T1.C_FULLNAME C_PROJECTNAME,
+            T1.C_SHORTNAME C_PROJECTSHORTNAME,
+            '' C_TRUSTSERIALNO,
+            T1.C_CONTRAST C_PROJECTCODEALIAS,
+            FN_TTF_GETINDUSTRYDTL(V_INDUSTRYDETAIL,C_PRODCODE,'','',C_INDUSTRYDTL) O_INDUSTRYDTL,
+            '' C_PERIOD,
+            '' C_TIMELIMIT,
+            '' C_DEALMANAGE,
+			T1.C_DIRECTOR  C_DIRECTOR
+       from BASEINFO T1,
+            ( select TF.C_PROJCODE,
+                     min(TF.D_SETUPDATE)                       D_SETUPDATE,
+                     max(TF.D_ENDDATE)                         D_ENDDATE
+                from HSTDC.TA_FUNDINFO TF
+               where V_PROJECTDATESOURCE = '1'
+               group by TF.C_PROJCODE ) T2
+     WHERE T1.C_PROJCODE = T2.C_PROJCODE(+)
+   )
+```
+
+#### 4 向 trpt_tprojfullfactor_tcmp 中插入数据
+
+- 1 DTL 只是从TDC 中取值。
+- 2 向trpt_tprojfullfactor_tcmp 中插入值的时候才会进行数据转换。
+
+#### 5 更新汇率、外币转换
+
+### 2 TCMP 代码结构
+
+- 第一段：1.1 代保管项目统计方式【0/统计到表内;1/统计到表外】
+  - 1.1.1 ： 统计到表内
+  - 1.1.2 ： 统计到表外
+  - 1.1.3 ： 如果L_CNT = 0 就抛出异常。
+- 第二段：1.2 向trpt_tprojfullfactor_tcmp 表中插入数据
+
+  - 1.2.1 ：准备数据 with 【BaseInfo】
+    - **是代保管**
+  - -  --2.1.1 按项目统计--到期日期先取实际到期日期，然后取预计，最后取2099-12-31
+    -  --2.1.2 按子项目
+    -  **不是代保管**
+    -  --2.1.1 按项目统计--到期日期先取实际到期日期，然后取预计，最后取2099-12-31
+    -  --2.1.2 按子项目
+
+  - 1.2.2 ：准备数据  with 【DTL】 ：直接从BaseInfo 中取数据。
+  - 1.2.3 : 向 trpt_tprojfullfactor_tcmp 插入数据，主要从【DTL】 中取数。
+- 第三段： 更新
+  - 更新汇率。
+  - 外币转换。
+
+项目结束：银行存款没有划出去。
+
+表内：统计到全要素中就是表内，不在内的就是表外。
+
+
+
+关联：用科目代码后六位关联AM 交易对手编号。或者关联AM 合同编号
+
+权重：
+
+
+
+全要素分拆统计逻辑【
+
+01-按AM**对手**分拆统计(默认)： 维度：**交易对手维度**
+
+​    FA 金额取数逻辑：按照权重拆分（最后资金都需要取估值。）
+
+02-按AM**合同**分拆统计/：
+
+​     ：
+
+11-按AM+FA**对手**关联统计/
+
+​    关联：用科目代码后六位关联AM 交易对手编号。或者关联AM 合同编号
+
+12-按AM+FA**合同**关联统计】

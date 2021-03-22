@@ -1,0 +1,162 @@
+## 动态列要素
+### 项目数据逻辑图
+![](https://img-blog.csdnimg.cn/20200811171208831.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMjMwOA==,size_16,color_FFFFFF,t_70)
+### 项目结构
+![](https://img-blog.csdnimg.cn/202008111645412.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMjMwOA==,size_16,color_FFFFFF,t_70)
+### 00 升级脚本
+> 暂时没有找到用处，估测用于系统升级
+### 01 通用必打脚本
+* 表结构
+* 表字段解释
+* 表校验规则脚本
+![t_01](https://img-blog.csdnimg.cn/20200811161442340.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMjMwOA==,size_16,color_FFFFFF,t_70)
+
+### 02 个性化脚本
+> 根据客户类型不同，编写一些不通用的脚本
+
+### 03 存储过程、视图、函数
+* 03.03 存储过程
+* 03.04 视图
+* 03.06 函数
+![t_02](https://img-blog.csdnimg.cn/20200811162048999.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDIxMjMwOA==,size_16,color_FFFFFF,t_70)
+
+### 04 菜单按钮脚本
+> 项目左侧菜单按钮展示和权限
+
+### 05 系统参数
+> 暂时没有用过
+
+### 06 数据字典
+> 数据库用到的所有字典脚本
+
+### 07 配置汇总
+- 01 采集配置
+- 02 动态列
+- 03 要素
+
+### 08 开通功能
+> 暂时没用过
+
+### 09 工具脚本
+> 项目运行需要的一些工具
+
+## 动态列
+### 00 操作的步骤
+- [操作步骤](docs/操作步骤.md)
+
+### 01 tproject_model_config
+
+```sql
+insert into tproject_model_config
+    (c_modelcode,    -- 模式编码 【c01】
+     c_modelname,    -- 模式名称 【srdt_xtcpjbxx】
+     c_queryserver,  -- 查询服务 【1】
+     c_isinitquery,  -- 是否初始化执行（0否/1是） 【1】
+     c_ishighquery,  -- 是否显示高级查询按钮（0否/1是）【1】
+     c_scripturl,    -- 单独引入的js的路径 【/js/tcmp/pm/factorcompage.js】
+     c_iscolbtn,     -- 是否显示列操作按钮 【1】
+     c_ismutiselect, -- 【null】
+     c_tablekey,     -- 动态列表的每行数据的主键名称 【id】
+     c_iscommonquery,--【1】
+     c_querysql      --  【bigstringc01】
+     )
+```
+> 关键字段
+- **modelcode** : 模板编码
+- **modelname** : 模板名称
+- **querysql** : bigstring + 模板编号 
+
+### 02 tproject_temp_config_button
+```sql
+insert into tproject_temp_config_button
+    (c_modelcode,   -- 所属模板       【c01】
+     c_buttoncode,  -- 按钮名称      【addbtn】
+     c_parentcode,  -- 父节点名称    【null】
+     c_buttonname,  -- 按钮名称      【新增】
+     c_buttontype,  -- 按钮类型      【1】
+     c_eventtype,   -- 事件类型       【1】
+     c_clickbound,  -- 绑定值（事件对应的js的方法名）  【null】
+     l_order,       -- 按钮排序              【0】
+     trans_code,    -- 功能号        【srdt_xtcpjbxx】
+     sub_trans_code,-- 子功能号   【addbtn】
+     c_icon,        -- 按钮图标          【add】
+     c_templatecode,-- 模板代码   【default 】
+     c_dropbtnurl,  -- 获取下拉按钮的服务地址  【null】
+     c_isalignright -- 【null】
+     )
+```
+### 03 tproject_template_field
+
+```sql
+insert into tproject_template_field
+    (c_fieldcode,        -- 字段编码 【xtcpdm】
+     c_fieldname,        -- 字段名称  【信托产品代码】
+     c_modelcode,        -- 所属模块，对应tproject_model_config表的主键【c01】
+     l_order,            -- 排序 【2】
+     c_fieldtype,        -- 字段类型: 1列表字段/2查询字段/3列表和查询字段 【3】
+     c_comptype,         --  组件类型：【1】
+     c_valuebound,       -- 绑定值 【null】
+     l_colspan,          -- 所占列数 【1】
+     c_colrenderer,      -- 列渲染函数名称 【null】
+     c_fieldwidth,       -- 【null】
+     c_isnotfactorfield, -- 【null】
+     c_defvalue,         -- 【null】
+     c_fieldconfig)      -- 【null】
+```
+> 组件类型取值
+```sql
+组件类型：
+    0:label（文本显示）
+    1:textfield（文本框）
+    2:textfield(数字框)
+    3:textarea（文本域）
+    4:calendar（日历控件）
+    5:combox（自定义下拉框）
+    6:combox（字典下拉框选择）
+    7:biz_targetselect（弹出对象选择框）
+    9:combox（字典复选下拉选择框）
+    10:select（自定义复选下拉选择框）
+    11:checkbox_group（自定义复选框）
+    14:combox（自定义服务下拉选择框）
+    15:combox（自定义服务复选下拉选择框）
+    16:textfield（金额数字框）
+    17:combox（支持模糊查询下拉选择框）
+    18:textfield（格式化 数字框）
+    19:iframe（url页面）
+    20:input（hidden隐藏值）
+    21:VM页面
+    22:自定义DOM结构
+    23:calendargroup+sort(日历组+排序)
+```
+
+### 04 tproject_temp_config
+```sql
+insert into tproject_temp_config
+    (c_templatecode,   -- 模板编号 【00000c01】
+     c_templatename,   -- 模板名称 【east4_c01信托产品基本信息】
+     c_ispublic,       -- 模板类型0公用1私人 【0】
+     c_isdefault,      -- 是否默认 【1】
+     l_order,          -- 模板次序 【null】
+     c_createuser,     -- 创建人 【admin】
+     d_createtime,     -- 创建时间 【select sysdate from dual】
+     c_isshow,         -- 是否首页显示 【0】 
+     c_templatedesc,   -- 模板描述 【null】
+     c_lastupdateuser, -- 最后修改人 【admin】
+     d_lastupdatetime, -- 最后修改时间 【(select sysdate from dual)】
+     c_modelcode       -- 模块编码 【c01】
+     )
+```
+
+### 05 tproject_temp_config_query
+```sql
+insert into tproject_temp_config_query
+    (c_templatecode,  -- 模板编号 【00000c01】
+     c_fieldcode,     -- 字段编码 【xtcpdm】
+     c_fieldname,     -- 字段名称 【信托产品代码】
+     c_isshow,        -- 是否显示   【1】
+     l_order,         -- 显示次序 【3】
+     c_defvalue,      -- 默认值 【null】
+     c_modelcode,     -- 所属模块 【c01】
+     c_isbasequery)   -- 是否基础查询条件（0否/1是） 【1】
+```
+

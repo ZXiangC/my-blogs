@@ -1,0 +1,7 @@
+- 输入字段映射，但是删除了一些字段。
+
+### The tablename is not defined (empty)
+
+- 将这个去掉勾选就可以了
+
+![01](01%20kettle%20%E4%BD%BF%E7%94%A8%E5%87%BA%E7%8E%B0%E7%9A%84%E9%94%99%E8%AF%AF.assets/1482104-20200108164241374-182826230.png)

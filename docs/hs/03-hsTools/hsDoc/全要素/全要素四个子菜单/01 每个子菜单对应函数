@@ -1,0 +1,43 @@
+- 项目信息数据：  getProjectInfoForPage
+
+  >```java
+  >.append("   from trpt_tprojfullfactor_tcmp rp, ")
+  >.append("      tsys_user su1, tsys_user su2, ")
+  >.append("      (select param_value translateDict from tsys_parameter where UPPER(param_code)='FULLFACTORTRANSLATEDICT') t ")
+  >.append("  where rp.c_collman = su1.user_id(+) ")
+  >.append("   and rp.c_checkman = su2.user_id(+) "); 
+  >```
+
+- 委托人信息数据：getPrincipalInfoForPage
+
+  >```java
+  >.append("   from trpt_tprojfullfactor_hsta rp, trpt_tprojfullfactor_tcmp pi, ")
+  >.append("      tsys_user su1, tsys_user su2 ")
+  >.append("  where rp.c_projcode = pi.c_projcode ")
+  >.append("   and to_char(rp.d_date, 'yyyy-MM-dd') = to_char(pi.d_date, 'yyyy-MM-dd') ")
+  >.append("   and rp.c_collman = su1.user_id(+) ")
+  >.append("   and rp.c_checkman = su2.user_id(+) ");
+  >```
+
+- 财务核算数据：getFinanceInfoForPage
+
+  >```java
+  >.append("   from trpt_tprojfullfactor_hsfa rp, trpt_tprojfullfactor_tcmp pi, ")
+  >.append("      tsys_user su1, tsys_user su2 ")
+  >.append("  where rp.c_projcode = pi.c_projcode ")
+  >.append("   and to_char(rp.d_date, 'yyyy-MM-dd') = to_char(pi.d_date, 'yyyy-MM-dd') ")
+  >.append("   and rp.c_collman = su1.user_id(+) ")
+  >.append("   and rp.c_checkman = su2.user_id(+) ");
+  >```
+
+- 项目资产运用数据：getAssetsInfoForPage
+
+  >```java
+  >.append("   from trpt_tprojfullfactor_hsam rp, trpt_tprojfullfactor_tcmp pi, ")
+  >.append("      tsys_user su1, tsys_user su2, ")
+  >.append("      (select param_value translateDict from tsys_parameter where upper(param_code)='FULLFACTORTRANSLATEDICT') t ")
+  >.append("  where rp.c_projcode = pi.c_projcode ")
+  >.append("   and to_char(rp.d_date, 'yyyy-MM-dd') = to_char(pi.d_date, 'yyyy-MM-dd') ")
+  >.append("   and rp.c_collman = su1.user_id(+) ")
+  >.append("   and rp.c_checkman = su2.user_id(+) ");
+  >```
