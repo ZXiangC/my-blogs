@@ -10,14 +10,8 @@
   * [others](tools/others/_sidebar.md)
 
 * Java
-  * [java基础](zh-cn/configuration.md)
-  * [java多线程](zh-cn/themes.md)
-  * [JVM](zh-cn/plugins.md)
-  * [Spring](zh-cn/markdown.md)
-  * [Mybatis](zh-cn/language-highlight.md)
-  * [SpringMVC](zh-cn/language-highlight.md)
-  * [SpringBoot](zh-cn/language-highlight.md)
-
+  * [java-base](zh-cn/configuration.md)
+  * [java-frame](java/java-frame/_sidebar.md)
 - 项目
   - [谷粒商城](item/guli/_sidebar.md)
 
