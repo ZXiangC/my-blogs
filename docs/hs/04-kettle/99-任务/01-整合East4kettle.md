@@ -1,10 +1,18 @@
-d
+> 合并kettle 步骤
+>
+> 1 查看个数是否一样。
+>
+> 2 查看个数中映射是否一样。
 
 
 
 ### (1) tdcktl_am_xj_ktl
 
-![image-20210325143820370](https://gitee.com/ZXiangC/picture/raw/master/img/image-20210325143820370.png)	
+![image-20210325143820370](https://gitee.com/ZXiangC/picture/raw/master/img/image-20210325143820370.png)
+
+​	
+
+![image-20210329092958054](https://gitee.com/ZXiangC/picture/raw/master/img/image-20210329092958054.png)
 
 ###  (2) tdc_amktl_innate 作业
 
