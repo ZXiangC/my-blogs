@@ -1215,7 +1215,7 @@ select * from nls_database_parameters t where t.PARAMETER = 'NLS_CHARACTERSET';
 - 1 查询被锁的表
 
 ```sql
-    Select t2.username,t2.sid,t2.serial#,t2.logon_time from v$locked_object t1,v$session t2 where t1.session_id=t2.sid;
+Select t2.username,t2.sid,t2.serial#,t2.logon_time from v$locked_object t1,v$session t2 where t1.session_id=t2.sid;
 ```
 
 ![2020.7.9](00%20Oracle.assets/20200709194526522.png)
@@ -1306,4 +1306,20 @@ ORCL =
  ####  4.2 截图
 
 ![image-20210311230855508](https://gitee.com/ZXiangC/picture/raw/master/imgs/image-20210311230855508.png)
+
+#### 5 Sql 语句执行的优先级
+
+```sql
+1. from语句
+2. where语句(结合条件)
+3. start with语句
+4. connect by语句
+5. where语句
+6. group by语句
+7. having语句
+8. model语句
+9. select语句
+10. union、minus、intersect等集合演算演算
+11. order by语句
+```
 

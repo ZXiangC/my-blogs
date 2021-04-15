@@ -1,1 +1,13 @@
-- hello world
+### 1 全要素主要存储过程
+
+> SP_RPT_TTFCOL_HSAM.sql
+> SP_RPT_TTFCOL_HSFA.sql
+> SP_RPT_TTFCOL_HSTA.sql
+> SP_RPT_TTFCOL_MULT.sql
+> SP_RPT_TTFCOL_TCMP.sql
+> SP_RPT_TTFGETRESULT.sql
+>
+> SP_RPT_CBRC_TPROJDCFMONITOR.sql
+> SP_RPT_CBRC_TPROJFULLFACTORCHE.sql
+> sp_rpt_cbrc_tProjFullFactorCol.sql
+> SP_RPT_CBRC_TPROJFULLFACTORQRY.sql
