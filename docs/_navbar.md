@@ -10,7 +10,7 @@
   * [others](tools/others/_sidebar.md)
 
 * Java
-  * [java-base](zh-cn/configuration.md)
+  * [java-base](java/java-base/_sidebar.md)
   * [java-frame](java/java-frame/_sidebar.md)
 - 项目
   - [谷粒商城](item/guli/_sidebar.md)
