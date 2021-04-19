@@ -1307,3 +1307,14 @@ ORCL =
 
 ![image-20210311230855508](https://gitee.com/ZXiangC/picture/raw/master/imgs/image-20210311230855508.png)
 
+### 4.3 修改其他用户的用户名密码
+
+```sql
+-- 修改用户名密码
+alter user chen identified by chen;
+-- 解锁用户
+alter user scott account unlock;
+
+mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=D:\16-tempFile\oracle_lib\lib\ojdbc6.jar
+```
+
