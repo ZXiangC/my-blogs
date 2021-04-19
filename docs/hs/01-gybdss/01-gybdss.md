@@ -1,6 +1,13 @@
-- hello world
+### 1 全要素主要存储过程
 
-### 1 文件结构
-
-- 文件夹名称：root_path//gybdss//l_order-megTable+c_content
-- 文件名：03-yyyyMMddchenzx(c_content【动态列】配置脚本).sql;
+> SP_RPT_TTFCOL_HSAM.sql
+> SP_RPT_TTFCOL_HSFA.sql
+> SP_RPT_TTFCOL_HSTA.sql
+> SP_RPT_TTFCOL_MULT.sql
+> SP_RPT_TTFCOL_TCMP.sql
+> SP_RPT_TTFGETRESULT.sql
+>
+> SP_RPT_CBRC_TPROJDCFMONITOR.sql
+> SP_RPT_CBRC_TPROJFULLFACTORCHE.sql
+> sp_rpt_cbrc_tProjFullFactorCol.sql
+> SP_RPT_CBRC_TPROJFULLFACTORQRY.sql
