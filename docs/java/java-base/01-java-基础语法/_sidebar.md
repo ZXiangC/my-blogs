@@ -1,3 +1,2 @@
 * Java-frame
-  * [01-mybatis](java/java-frame/01-mybatis/_sidebar.md)
-  * [02-mybatisPlus](java/java-frame/02-mybatisPlus/_sidebar.md)
+  * [01-java类型](java/java-base/01-java-基础语法/01-java类型.md)
