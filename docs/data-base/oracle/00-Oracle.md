@@ -1173,20 +1173,19 @@ imp tpfs/tpfs@orcl file=E:\oracle\dmp\tpfs\tpfs.dmp fromuser=tpfs touser=tpfs
 
 ```sql
 -- 创建 db link 【connect to 用户名 identified by 密码  Host : 10.20.31.80】
-create database link HSFA
-  connect to eastythfa identified by eastythfa
-  using '(DESCRIPTION =
-              (ADDRESS_LIST =
-                  (ADDRESS = (PROTOCOL = TCP)(HOST = 10.20.31.80)(PORT = 1521)) 
-               )
-               (CONNECT_DATA =
-                  (SERVER = DEDICATED ) 
-                  (SERVICE_NAME = ora11g)  
-                )
-           )';
-
--- 删除db link
-drop database link  HSFA; 
+create database link TUSP_KF
+connect to tusp_kf identified by htdc1SJYY
+using '(DESCRIPTION =
+            (ADDRESS_LIST =
+                (ADDRESS = (PROTOCOL = TCP)(HOST = 172.28.1.30)(PORT = 1521)) 
+             )
+             (CONNECT_DATA =
+                (SERVER = DEDICATED ) 
+                (SERVICE_NAME = orcl)  
+              )
+ )';
+ 
+drop database link  TUSP_KF; 
 ```
 
 
