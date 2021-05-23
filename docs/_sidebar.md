@@ -12,6 +12,7 @@
 * Java
   * [java-base](java/java-base/_sidebar.md)
   * [java-frame](java/java-frame/_sidebar.md)
+  * [java-tools](java/java-tools/_sidebar.md)
 - 项目
   - [谷粒商城](item/guli/_sidebar.md)
 
