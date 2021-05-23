@@ -672,6 +672,13 @@ end;
 /
 ```
 
+### 3.0 日期函数
+
+```sql
+-- 1.1 取上月月末
+(select last_day(add_months(sysdate,-1)) from dual)
+```
+
 
 
 ## 3 Sql 编程
@@ -1312,7 +1319,7 @@ ORCL =
 
 - 2 kill 锁住的id
 
-```sql
+​```sql
 alter system kill session '17, 15453'; 
 ```
 
