@@ -271,7 +271,7 @@ public void testOptimisticLockerFail() {
 }
 ```
 
-# 三、select
+## 三、select
 
 ### 1、根据id查询记录
 
@@ -391,7 +391,7 @@ public void testSelectMapsPage() {
 }
 ```
 
-# 四、delete
+## 四、delete
 
 ### 1、根据id删除记录
 
@@ -540,7 +540,7 @@ public void testLogicDeleteSelect() {
 
 SELECT id,name,age,email,create_time,update_time,deleted FROM user WHERE deleted=0
 
-# 五、性能分析
+## 五、性能分析
 
 性能分析拦截器，用于输出每条 SQL 语句及其执行时间
 
@@ -624,7 +624,7 @@ performanceInterceptor.setMaxTime(5);//ms，超过此处设置的ms不执行
 
 ![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/1ae5ae68-b6b2-4801-ae26-29835b175b24.png)
 
-# 六、其它
+## 六、其它
 
 如果想进行复杂条件查询，那么需要使用条件构造器 Wapper，涉及到如下方法
 
