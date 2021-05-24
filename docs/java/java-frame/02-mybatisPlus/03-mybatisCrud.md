@@ -1,6 +1,6 @@
-# 一、insert
+## 一、insert
 
-## 1、插入操作
+### 1、插入操作
 
  
 
@@ -31,7 +31,7 @@ public class CRUDTests {
 
 ![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/93ff417f-c9f7-4225-b395-2afe2776183d.jpg)
 
-## 2、主键策略
+### 2、主键策略
 
 （1）ID_WORKER
 
@@ -59,9 +59,9 @@ private Long id;
 mybatis-plus.global-config.db-config.id-type=auto
 ```
 
-# 二、update
+## 二、update
 
-## 1、根据Id更新操作
+### 1、根据Id更新操作
 
 **注意：**update时生成的sql自动是动态sql：UPDATE user SET age=? WHERE id=? 
 
@@ -81,7 +81,7 @@ mybatis-plus.global-config.db-config.id-type=auto
     }
 ```
 
-## 2、自动填充
+### 2、自动填充
 
 项目中经常会遇到一些数据，每次都使用相同的方式填充，例如记录的创建时间，更新时间等。
 
@@ -144,7 +144,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 }
 ```
 
-## 3、乐观锁
+### 3、乐观锁
 
 **主要适用场景：**当要更新一条记录的时候，希望这条记录没有被别人更新，也就是说实现线程安全的数据更新
 
@@ -273,7 +273,7 @@ public void testOptimisticLockerFail() {
 
 # 三、select
 
-## 1、根据id查询记录
+### 1、根据id查询记录
 
  
 
@@ -286,7 +286,7 @@ public void testSelectById(){
 }
 ```
 
-## 2、readData
+### 2、readData
 
 完成了动态sql的foreach的功能
 
@@ -301,7 +301,7 @@ public void testSelectBatchIds(){
 }
 ```
 
-## 3、简单的条件查询
+### 3、简单的条件查询
 
 通过map封装查询条件
 
@@ -322,7 +322,7 @@ public void testSelectByMap(){
 
 **注意：**map中的key对应的是数据库中的列名。例如数据库user_id，实体类是userId，这时map的key需要填写user_id
 
-## 4、分页
+### 4、分页
 
 MyBatis Plus自带分页插件，只要简单的配置即可实现分页功能
 
@@ -393,7 +393,7 @@ public void testSelectMapsPage() {
 
 # 四、delete
 
-## 1、根据id删除记录
+### 1、根据id删除记录
 
  
 
@@ -406,7 +406,7 @@ public void testDeleteById(){
 }
 ```
 
-## 2、批量删除
+### 2、批量删除
 
  
 
@@ -419,7 +419,7 @@ public void testDeleteById(){
     }
 ```
 
-## 3、简单的条件查询删除
+### 3、简单的条件查询删除
 
  
 
@@ -436,7 +436,7 @@ public void testDeleteByMap() {
 }
 ```
 
-## 4、逻辑删除
+### 4、逻辑删除
 
 - 物理删除：真实删除，将对应数据从数据库中删除，之后查询不到此条被删除数据
 - 逻辑删除：假删除，将对应数据中代表是否被删除字段状态修改为“被删除状态”，之后在数据库中仍旧能看到此条数据记录
@@ -546,7 +546,7 @@ SELECT id,name,age,email,create_time,update_time,deleted FROM user WHERE deleted
 
 SQL 性能执行分析,开发环境使用，超过指定时间，停止运行。有助于发现问题
 
-## 1、配置插件
+### 1、配置插件
 
 **（1）参数说明**
 
@@ -586,7 +586,7 @@ spring.profiles.active=dev
 
 也可以自定义环境名称：如test1、test2
 
-## 2、测试
+### 2、测试
 
 **（1）常规测试**
 
@@ -608,7 +608,7 @@ public void testPerformance() {
 
 **输出：**
 
-![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/bb355a17-3cdc-4f0a-82f2-232defbd235b.png)
+![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/bb355a17-3cdc-4f0a-82f2-232defbd235b.png)
 
 **（2）将maxTime 改小之后再次进行测试**
 
