@@ -18,7 +18,7 @@ Wrapper ： 条件构造抽象类，最顶端父类
 
  
 
-```
+```java
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class QueryWrapperTests {
@@ -35,9 +35,20 @@ public class QueryWrapperTests {
 
 ## **1、ge、gt、le、lt、isNull、isNotNull**
 
+| 标识               | 符号 | 描述 |
+| ------------------ | ---- | ---- |
+| ge  (great equals) | > =  |      |
+| gt  (great then)   | >    |      |
+| le  (less equals)  | <=   |      |
+| lt  (less then)    | <    |      |
+| eq ( equals )      | =    |      |
+| ne (not equals)    | !=   |      |
+| isNull             |      |      |
+| isNotNull          |      |      |
+
  
 
-```
+```java
 @Test
 public void testDelete() {
 
@@ -53,13 +64,13 @@ public void testDelete() {
 
 SQL：UPDATE user SET deleted=1 WHERE deleted=0 AND name IS NULL AND age >= ? AND email IS NOT NULL
 
-## **2、eq、ne**
+- 2、eq、ne
 
 **注意：**seletOne返回的是一条实体记录，当出现多条时会报错
 
  
 
-```
+```java
 @Test
 public void testSelectOne() {
 
@@ -79,7 +90,7 @@ SELECT id,name,age,email,create_time,update_time,deleted,version FROM user WHERE
 
  
 
-```
+```java
 @Test
 public void testSelectCount() {
 
@@ -97,7 +108,7 @@ SELECT COUNT(1) FROM user WHERE deleted=0 AND age BETWEEN ? AND ?
 
  
 
-```
+```java
 @Test
 public void testSelectList() {
 
@@ -124,7 +135,7 @@ selectMaps返回Map集合列表
 
  
 
-```
+```java
 @Test
 public void testSelectMaps() {
 
@@ -157,7 +168,7 @@ inSql、notinSql：可以实现子查询
 
  
 
-```
+```java
 @Test
 public void testSelectObjs() {
 
@@ -182,7 +193,7 @@ FROM user WHERE deleted=0 AND id IN (select id from user where id < 3)
 
  
 
-```
+```java
 @Test
 public void testUpdate1() {
 
