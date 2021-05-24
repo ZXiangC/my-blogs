@@ -1,4 +1,4 @@
-# **一、wapper介绍** 
+# 一、wapper介绍 
 
 ![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/27b56b5e-39a6-42ba-b7ed-4f109b6ad7bf.png)
 
@@ -30,10 +30,10 @@ public class QueryWrapperTests {
 
 # 二、AbstractWrapper
 
-**
+
 ****注意：**以下条件构造器的方法入参中的 `column `均表示数据库字段
 
-## **1、ge、gt、le、lt、isNull、isNotNull**
+## 1、ge、gt、le、lt、isNull、isNotNull
 
 | 标识               | 符号 | 描述 |
 | ------------------ | ---- | ---- |
@@ -84,7 +84,7 @@ public void testSelectOne() {
 
 SELECT id,name,age,email,create_time,update_time,deleted,version FROM user WHERE deleted=0 AND name = ? 
 
-## **3、between、notBetween**
+## 3、between、notBetween
 
 包含大小边界
 
@@ -104,7 +104,7 @@ public void testSelectCount() {
 
 SELECT COUNT(1) FROM user WHERE deleted=0 AND age BETWEEN ? AND ? 
 
-## **4、allEq**
+## 4、allEq
 
  
 
@@ -129,7 +129,7 @@ SELECT id,name,age,email,create_time,update_time,deleted,version
 
 FROM user WHERE deleted=0 AND name = ? AND id = ? AND age = ? 
 
-## **5、like、notLike、likeLeft、likeRight**
+## 5、like、notLike、likeLeft、likeRight
 
 selectMaps返回Map集合列表
 
@@ -153,7 +153,7 @@ SELECT id,name,age,email,create_time,update_time,deleted,version
 
 FROM user WHERE deleted=0 AND name NOT LIKE ? AND email LIKE ? 
 
-## **6、in、notIn、inSql、notinSql、exists、notExists**
+## 6、in、notIn、inSql、notinSql、exists、notExists
 
 in、notIn：
 
@@ -185,7 +185,7 @@ SELECT id,name,age,email,create_time,update_time,deleted,version
 
 FROM user WHERE deleted=0 AND id IN (select id from user where id < 3) 
 
-## **7、or、and**
+## 7、or、and
 
 **注意：**这里使用的是 UpdateWrapper 
 
@@ -217,13 +217,13 @@ public void testUpdate1() {
 
 UPDATE user SET name=?, age=?, update_time=? WHERE deleted=0 AND name LIKE ? OR age BETWEEN ? AND ?
 
-## **8、嵌套or、嵌套and**
+## 8、嵌套or、嵌套and
 
 这里使用了lambda表达式，or中的表达式最后翻译成sql时会被加上圆括号
 
  
 
-```
+```java
 @Test
 public void testUpdate2() {
 
@@ -251,11 +251,11 @@ WHERE deleted=0 AND name LIKE ?
 
 OR ( name = ? AND age <> ? ) 
 
-## **9、orderBy、orderByDesc、orderByAsc**
+## 9、orderBy、orderByDesc、orderByAsc
 
  
 
-```
+```java
 @Test
 public void testSelectListOrderBy() {
 
@@ -271,7 +271,7 @@ SELECT id,name,age,email,create_time,update_time,deleted,version
 
 FROM user WHERE deleted=0 ORDER BY id DESC 
 
-## **10、last**
+## 10、last
 
 直接拼接到 sql 的最后
 
@@ -279,7 +279,7 @@ FROM user WHERE deleted=0 ORDER BY id DESC
 
  
 
-```
+```java
 @Test
 public void testSelectListLast() {
 
@@ -295,11 +295,11 @@ SELECT id,name,age,email,create_time,update_time,deleted,version
 
 FROM user WHERE deleted=0 limit 1 
 
-## **11、**指定要查询的列
+## 11、指定要查询的列
 
  
 
-```
+```java
 @Test
 public void testSelectListColumn() {
 
@@ -313,7 +313,7 @@ public void testSelectListColumn() {
 
 SELECT id,name,age FROM user WHERE deleted=0 
 
-## **12、set、setSql**
+## 12、set、setSql
 
 最终的sql会合并 user.setAge()，以及 userUpdateWrapper.set()  和 setSql() 中 的字段
 

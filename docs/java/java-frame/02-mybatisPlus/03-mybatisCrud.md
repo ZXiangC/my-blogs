@@ -1,10 +1,10 @@
-# **一、insert**
+# 一、insert
 
-## **1、插入操作**
+## 1、插入操作
 
  
 
-```
+```java
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CRUDTests {
@@ -29,26 +29,23 @@ public class CRUDTests {
 
 **注意：**数据库插入id值默认为：全局唯一id
 
-![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/93ff417f-c9f7-4225-b395-2afe2776183d.jpg)
+![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/93ff417f-c9f7-4225-b395-2afe2776183d.jpg)
 
 ## 2、主键策略
 
-**（1）ID_WORKER**
+（1）ID_WORKER
 
 MyBatis-Plus默认的主键策略是：ID_WORKER  *全局唯一ID*
 
 **参考资料：分布式系统唯一ID生成方案汇总：**https://www.cnblogs.com/haoxinyue/p/5208136.html
 
-**（2）自增策略**
+（2）自增策略
 
-- 要想主键自增需要配置如下主键策略
+![](https://gitee.com/ZXiangC/picture/raw/master/imgs/20190508113713548.png)
 
-- - 需要在创建数据表的时候设置主键自增
-  - 实体字段中配置 @TableId(type = IdType.AUTO)
 
- 
 
-```
+```java
 @TableId(type = IdType.AUTO)
 private Long id;
 ```
@@ -57,63 +54,20 @@ private Long id;
 
  
 
-```
+```java
 #全局设置主键生成策略
 mybatis-plus.global-config.db-config.id-type=auto
 ```
 
-其它主键策略：分析 IdType 源码可知
-
- 
-
-```
-@Getter
-public enum IdType {
-    /**
-     * 数据库ID自增
-     */
-    AUTO(0),
-    /**
-     * 该类型为未设置主键类型
-     */
-    NONE(1),
-    /**
-     * 用户输入ID
-     * 该类型可以通过自己注册自动填充插件进行填充
-     */
-    INPUT(2),
-
-    /* 以下3种类型、只有当插入对象ID 为空，才自动填充。 */
-    /**
-     * 全局唯一ID (idWorker)
-     */
-    ID_WORKER(3),
-    /**
-     * 全局唯一ID (UUID)
-     */
-    UUID(4),
-    /**
-     * 字符串全局唯一ID (idWorker 的字符串表示)
-     */
-    ID_WORKER_STR(5);
-
-    private int key;
-
-    IdType(int key) {
-        this.key = key;
-    }
-}
-```
-
 # 二、update
 
-## **1、根据Id更新操作**
+## 1、根据Id更新操作
 
 **注意：**update时生成的sql自动是动态sql：UPDATE user SET age=? WHERE id=? 
 
  
 
-```
+```java
     @Test
     public void testUpdateById(){
 
@@ -133,15 +87,15 @@ public enum IdType {
 
 我们可以使用MyBatis Plus的自动填充功能，完成这些字段的赋值工作：
 
-**（1）数据库表中添加自动填充字段**
+（1）数据库表中添加自动填充字段
 
-在User表中添加datetime类型的新的字段 create_time、update_time
+在User表中添加datetime类型的新的字段 *create_time*、*update_time*
 
-**（2）实体上添加注解**
+（2）实体上添加注解
 
  
 
-```
+```java
 @Data
 public class User {
     ......
@@ -155,13 +109,13 @@ public class User {
 }
 ```
 
-**（3）实现元对象处理器接口**
+（3）实现元对象处理器接口
 
 **注意：不要忘记添加 @Component 注解**
 
- 
 
-```
+
+```java
 package com.atguigu.mybatisplus.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
@@ -190,8 +144,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 }
 ```
 
-**（4）测试**
-
 ## 3、乐观锁
 
 **主要适用场景：**当要更新一条记录的时候，希望这条记录没有被别人更新，也就是说实现线程安全的数据更新
@@ -213,7 +165,7 @@ ALTER TABLE `user` ADD COLUMN `version` INT
 
 
 
-![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/7bf260f8-d483-49fe-b448-b2fbea3dddaf.png)
+![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/7bf260f8-d483-49fe-b448-b2fbea3dddaf.png)
 
 ***\*（2）实体类添加version字段\****
 
@@ -221,7 +173,7 @@ ALTER TABLE `user` ADD COLUMN `version` INT
 
  
 
-```
+```java
 @Version
 @TableField(fill = FieldFill.INSERT)
 private Integer version;
@@ -231,7 +183,7 @@ private Integer version;
 
  
 
-```
+```java
 @Override
 public void insertFill(MetaObject metaObject) {
     ......
@@ -245,11 +197,9 @@ public void insertFill(MetaObject metaObject) {
 
 **（4）\**在 MybatisPlusConfig 中注册 Bean\****
 
-创建配置类
-
  
 
-```
+```java
 package com.atguigu.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
@@ -279,7 +229,7 @@ public class MybatisPlusConfig {
 
  
 
-```
+```java
 /**
  * 测试 乐观锁插件
  */
@@ -300,7 +250,7 @@ public void testOptimisticLocker() {
 
  
 
-```
+```java
 /**
  * 测试乐观锁插件 失败
  */
@@ -321,13 +271,13 @@ public void testOptimisticLockerFail() {
 }
 ```
 
-# **三、select**
+# 三、select
 
-## **1、根据id查询记录**
+## 1、根据id查询记录
 
  
 
-```
+```java
 @Test
 public void testSelectById(){
 
@@ -336,13 +286,13 @@ public void testSelectById(){
 }
 ```
 
-## **2、通过多个id批量查询**
+## 2、readData
 
 完成了动态sql的foreach的功能
 
  
 
-```
+```java
 @Test
 public void testSelectBatchIds(){
 
@@ -351,13 +301,13 @@ public void testSelectBatchIds(){
 }
 ```
 
-## **3、简单的条件查询**
+## 3、简单的条件查询
 
 通过map封装查询条件
 
  
 
-```
+```java
 @Test
 public void testSelectByMap(){
 
@@ -443,7 +393,7 @@ public void testSelectMapsPage() {
 
 # 四、delete
 
-## **1、根据id删除记录**
+## 1、根据id删除记录
 
  
 
@@ -456,7 +406,7 @@ public void testDeleteById(){
 }
 ```
 
-## **2、批量删除**
+## 2、批量删除
 
  
 
@@ -469,7 +419,7 @@ public void testDeleteById(){
     }
 ```
 
-## **3、简单的条件查询删除**
+## 3、简单的条件查询删除
 
  
 
