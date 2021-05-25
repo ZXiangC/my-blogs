@@ -270,13 +270,4 @@ User(id=5, name=Billie, age=24, email=test5@baomidou.com)
 
 通过以上几个简单的步骤，我们就实现了 User 表的 CRUD 功能，甚至连 XML 文件都不用编写！
 
-#  七、配置日志
 
-查看sql输出日志
-
- 
-
-```
-#mybatis日志
-mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
-```

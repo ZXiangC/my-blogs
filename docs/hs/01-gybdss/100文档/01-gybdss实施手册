@@ -1,0 +1,9 @@
+### 1 统一社会信用代码，金融机构代码
+
+```sql
+select 
+ t.c_usccode as 社会信用统一代码 ,
+ t.c_forgcode as 金融机构代码
+from hstdc.bd_organ t;
+```
+

@@ -2,6 +2,16 @@
 
 [Scott 用户表结构](https://blog.csdn.net/flyer_tang/article/details/80597395)
 
+- 1、 部门表：dept
+
+| No   | 列名称 | 类型         | 描述                         |
+| :--- | :----- | :----------- | :--------------------------- |
+| 1    | DEPTNO | NUMBER(2)    | 部门编号，最多由2位数字组成  |
+| 2    | DNAME  | VARCHAR2(14) | 部门名称，最多由14个字符组成 |
+| 3    | LOC    | VARCHAR2(13) | 部门位置，最多由13个字符组成 |
+
+
+
 - dept 表数据
 
 ```sql
@@ -25,7 +35,22 @@ prompt Done.
 
 ```
 
+
+
 -- emp 表数据
+
+| No   | 列名称   | 类型         | 描述                                  |
+| ---- | -------- | ------------ | ------------------------------------- |
+| 1    | EMPNO    | NUMBER(4)    | 雇员编号                              |
+| 2    | ENAME    | VARCHAR2(10) | 雇员姓名                              |
+| 3    | JOB      | VARCHAR2(9)  | 雇员职位                              |
+| 4    | MGR      | NUMBER(4)    | 雇员的领导编号，领导也是雇员          |
+| 5    | HIREDATE | DATE         | 雇员的雇佣日期                        |
+| 6    | SAL      | NUMBER(7,2)  | 雇员工资（含5位整数，2位小数，共7位） |
+| 7    | COMM     | NUMBER(7,2)  | 雇员奖金                              |
+| 8    | DEPTNO   | NUMBER(2)    | 雇员所在部门编号                      |
+
+
 
 ```sql
 prompt Importing table emp...
@@ -77,7 +102,13 @@ prompt Done.
 
 ```
 
-- salGrade 工资表 表数据
+- salGrade 工资表 表结构和数据
+
+  | No   | 列名称 | 类型   | 描述             |
+  | :--- | :----- | :----- | :--------------- |
+  | 1    | GRADE  | NUMBER | 工资等级         |
+  | 2    | LOSAL  | NUMBER | 此等级的最低工资 |
+  | 3    | HISAL  | NUMBER | 此等级的最高等级 |
 
 ```sql
 prompt Importing table salgrade...
@@ -103,6 +134,13 @@ prompt Done.
 ```
 
 - 工资等级表（暂时没有数据）
+
+| No   | 列名称 | 类型         | 描述     |
+| :--- | :----- | :----------- | :------- |
+| 1    | ENAME  | VARCHAR2(10) | 雇员姓名 |
+| 2    | JOB    | VARCHAR2(9)  | 雇员职位 |
+| 3    | SAL    | NUMBER       | 雇员工资 |
+| 4    | COMM   | NUMBER       | 雇员奖金 |
 
 ### Scott 用户例题
 

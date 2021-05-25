@@ -275,6 +275,8 @@ public void testOptimisticLockerFail() {
 
 ### 1、根据id查询记录
 
+- 单个 id
+
  
 
 ```java
@@ -286,9 +288,7 @@ public void testSelectById(){
 }
 ```
 
-### 2、readData
-
-完成了动态sql的foreach的功能
+- 多个 id 
 
  
 
@@ -301,7 +301,7 @@ public void testSelectBatchIds(){
 }
 ```
 
-### 3、简单的条件查询
+### 2、简单的条件查询
 
 通过map封装查询条件
 
@@ -322,18 +322,18 @@ public void testSelectByMap(){
 
 **注意：**map中的key对应的是数据库中的列名。例如数据库user_id，实体类是userId，这时map的key需要填写user_id
 
-### 4、分页
+### 3、分页
 
 MyBatis Plus自带分页插件，只要简单的配置即可实现分页功能
 
-**（1）创建配置类**
+（1）创建配置类
 
 此时可以删除主类中的 *@MapperScan* 扫描注解**
 **
 
  
 
-```
+```java
 /**
  * 分页插件
  */
@@ -343,13 +343,13 @@ public PaginationInterceptor paginationInterceptor() {
 }
 ```
 
-**（2）测试selectPage分页**
+（2）测试selectPage分页
 
 **测试：**最终通过page对象获取相关数据
 
  
 
-```
+```java
 @Test
 public void testSelectPage() {
 
@@ -357,10 +357,10 @@ public void testSelectPage() {
     userMapper.selectPage(page, null);
 
     page.getRecords().forEach(System.out::println);
-    System.out.println(page.getCurrent());
-    System.out.println(page.getPages());
-    System.out.println(page.getSize());
-    System.out.println(page.getTotal());
+    System.out.println(page.getCurrent());// 当前页
+    System.out.println(page.getSize()); // 当前页显示条数
+    System.out.println(page.getTotal());// 总条数
+    System.out.println(page.getPages()); // 总页数
     System.out.println(page.hasNext());
     System.out.println(page.hasPrevious());
 }
@@ -368,11 +368,11 @@ public void testSelectPage() {
 
 控制台sql语句打印：SELECT id,name,age,email,create_time,update_time FROM user LIMIT 0,5 
 
-**（3）测试selectMapsPage分页：结果集是Map**
+（3）测试selectMapsPage分页：结果集是Map
 
  
 
-```
+```java
 @Test
 public void testSelectMapsPage() {
 
@@ -397,7 +397,7 @@ public void testSelectMapsPage() {
 
  
 
-```
+```java
 @Test
 public void testDeleteById(){
 
@@ -410,7 +410,7 @@ public void testDeleteById(){
 
  
 
-```
+```java
     @Test
     public void testDeleteBatchIds() {
 
@@ -423,7 +423,7 @@ public void testDeleteById(){
 
  
 
-```
+```java
 @Test
 public void testDeleteByMap() {
 
@@ -441,23 +441,23 @@ public void testDeleteByMap() {
 - 物理删除：真实删除，将对应数据从数据库中删除，之后查询不到此条被删除数据
 - 逻辑删除：假删除，将对应数据中代表是否被删除字段状态修改为“被删除状态”，之后在数据库中仍旧能看到此条数据记录
 
-**（1）数据库中添加 deleted字段**
+（1）数据库中添加 **deleted**字段
 
  
 
-```
+```sql
 ALTER TABLE `user` ADD COLUMN `deleted` boolean
 ```
 
 ![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/bc4cbff4-c2b8-45d5-ae8d-53439dd2330c.png)
 
-**（2）实体类添加deleted \**字段\****
+（2）实体类添加**deleted** 字段
 
 并加上 @TableLogic 注解 和 @TableField(fill = FieldFill.INSERT) 注解
 
  
 
-```
+```java
 @TableLogic
 @TableField(fill = FieldFill.INSERT)
 private Integer deleted;
@@ -467,7 +467,7 @@ private Integer deleted;
 
  
 
-```
+```java
 @Override
 public void insertFill(MetaObject metaObject) {
     ......
@@ -481,7 +481,7 @@ public void insertFill(MetaObject metaObject) {
 
  
 
-```
+```java
 mybatis-plus.global-config.db-config.logic-delete-value=1
 mybatis-plus.global-config.db-config.logic-not-delete-value=0
 ```
@@ -490,7 +490,7 @@ mybatis-plus.global-config.db-config.logic-not-delete-value=0
 
  
 
-```
+```java
 @Bean
 public ISqlInjector sqlInjector() {
     return new LogicSqlInjector();
@@ -505,7 +505,7 @@ public ISqlInjector sqlInjector() {
 
  
 
-```
+```java
 /**
  * 测试 逻辑删除
  */
@@ -523,7 +523,7 @@ MyBatis Plus中查询操作也会自动添加逻辑删除字段的判断
 
  
 
-```
+```java
 /**
  * 测试 逻辑删除后的查询：
  * 不包括被逻辑删除的记录
@@ -624,20 +624,5 @@ performanceInterceptor.setMaxTime(5);//ms，超过此处设置的ms不执行
 
 ![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/1ae5ae68-b6b2-4801-ae26-29835b175b24.png)
 
-## 六、其它
 
-如果想进行复杂条件查询，那么需要使用条件构造器 Wapper，涉及到如下方法
 
-**1、delete**
-
-**2、selectOne**
-
-**3、selectCount**
-
-**4、selectList**
-
-**5、selectMaps**
-
-**6、selectObjs**
-
-**7、update**
