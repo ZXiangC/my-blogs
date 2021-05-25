@@ -6,13 +6,13 @@
 
 ------
 
-# 一、创建并初始化数据库
+## 一、创建并初始化数据库
 
-## 1、创建数据库：
+#### 1、创建数据库：
 
 mybatis_plus
 
-## 2、创建 `User` 表
+#### 2、创建 `User` 表
 
 其表结构如下：
 
@@ -56,7 +56,7 @@ INSERT INTO user (id, name, age, email) VALUES
 (5, 'Billie', 24, 'test5@baomidou.com');
 ```
 
-# 二、初始化工程
+## 二、初始化工程
 
 使用 Spring Initializr 快速初始化一个 Spring Boot 工程
 
@@ -66,9 +66,9 @@ Artifact：mybatis-plus
 
 版本：2.2.1.RELEASE
 
-# 三、添加依赖
+## 三、添加依赖
 
-## 1、引入依赖
+#### 1、引入依赖
 
 ```
 spring-boot-starter`、```spring-boot-starter-test
@@ -118,11 +118,11 @@ spring-boot-starter`、```spring-boot-starter-test
 </dependencies>
 ```
 
-# 
+## 
 
 **注意：**引入 `MyBatis-Plus` 之后请不要再次引入 `MyBatis` 以及 `MyBatis-Spring`，以避免因版本差异导致的问题。
 
-## 2、idea中安装lombok插件
+#### 2、idea中安装lombok插件
 
 **（1）idea2018版本**
 
@@ -132,7 +132,7 @@ spring-boot-starter`、```spring-boot-starter-test
 
 ![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/ba5bc431-832b-4bcb-81fe-893d02ad3c6f.png)
 
-# 四、配置
+## 四、配置
 
 在 `application.properties` 配置文件中添加 MySQL 数据库的相关配置：
 
@@ -141,7 +141,7 @@ mysql5
  
 
 ```
-#mysql数据库连接
+##mysql数据库连接
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/mybatis_plus
 spring.datasource.username=root
@@ -171,7 +171,7 @@ java.sql.SQLException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is 
 
 
 
-# 五、编写代码
+## 五、编写代码
 
 1、主类
 
@@ -189,7 +189,7 @@ public class MybatisPlusApplication {
 }
 ```
 
-## 2、实体
+#### 2、实体
 
 创建包 entity 编写实体类 `User.java`（此处使用了 [Lombok](https://www.projectlombok.org/) 简化代码）
 
@@ -213,7 +213,7 @@ Lombok使用参考：
 
 https://blog.csdn.net/motui/article/details/79012846 
 
-## 3、mapper
+#### 3、mapper
 
 创建包 mapper 编写Mapper 接口： `UserMapper.java`
 
@@ -225,7 +225,7 @@ public interface UserMapper extends BaseMapper<User> {
 }
 ```
 
-# 六、开始使用
+## 六、开始使用
 
 添加测试类，进行功能测试：
 
