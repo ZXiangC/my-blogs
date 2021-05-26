@@ -449,7 +449,7 @@ public void testDeleteByMap() {
 ALTER TABLE `user` ADD COLUMN `deleted` boolean
 ```
 
-![img](C:/Users/%E7%A5%A5%E5%AD%90/Documents/My%20Knowledge/temp/f02b6f4d-de0b-4aee-9920-aa016e7ac514/128/index_files/bc4cbff4-c2b8-45d5-ae8d-53439dd2330c.png)
+![img](https://gitee.com/ZXiangC/picture/raw/master/imgs/bc4cbff4-c2b8-45d5-ae8d-53439dd2330c.png)
 
 （2）实体类添加**deleted** 字段
 
