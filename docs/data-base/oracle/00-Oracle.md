@@ -1431,3 +1431,10 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2
 11. order by语句
 ```
 
+### 6 执行效率最高删除重复记录的语句
+
+```sql
+ delete from temp e 
+ where e.rowid > (select min(x.rowid) from temp1 x where x.temp_no = e.temp_no);
+```
+
