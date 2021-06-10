@@ -672,3 +672,73 @@ public class StringBuilderTest02 {
     }
 }
 ```
+
+## 四、Math
+
+* ### 1、Math类概述
+
+  * Math 包含执行基本数字运算的方法
+
+* 2、Math中方法的调用方式
+
+  * Math类中无构造方法，但内部的方法都是静态的，则可以通过   **类名.进行调用**
+
+* ### 3、Math类的常用方法
+
+  | 方法名    方法名                               | 说明                                           |
+  | ---------------------------------------------- | ---------------------------------------------- |
+  | public static int   abs(int a)                 | 返回参数的绝对值                               |
+  | public static double ceil(double a)            | 返回大于或等于参数的最小double值，等于一个整数 |
+  | public static double floor(double a)           | 返回小于或等于参数的最大double值，等于一个整数 |
+  | public   static int round(float a)             | 按照四舍五入返回最接近参数的int                |
+  | public static int   max(int a,int b)           | 返回两个int值中的较大值                        |
+  | public   static int min(int a,int b)           | 返回两个int值中的较小值                        |
+  | public   static double pow (double a,double b) | 返回a的b次幂的值                               |
+  | public   static double random()                | 返回值为double的正值，[0.0,1.0)                |
+
+##  五、System
+
+* System类的常用方法 
+
+| 方法名                                   | 说明                                             |
+| ---------------------------------------- | ------------------------------------------------ |
+| public   static void exit(int status)    | 终止当前运行的   Java   虚拟机，非零表示异常终止 |
+| public   static long currentTimeMillis() | 返回当前时间(以毫秒为单位)                       |
+
+* 
+
+* 
+
+* 示例代码
+
+  * 需求：在控制台输出1-10000，计算这段代码执行了多少毫秒 
+
+  ```java
+  public class SystemDemo {
+      public static void main(String[] args) {
+          // 获取开始的时间节点
+          long start = System.currentTimeMillis();
+          for (int i = 1; i <= 10000; i++) {
+              System.out.println(i);
+          }
+          // 获取代码运行结束后的时间节点
+          long end = System.currentTimeMillis();
+          System.out.println("共耗时：" + (end - start) + "毫秒");
+      }
+  }
+  ```
+
+## 六、Arrays
+
+* Arrays的常用方法
+
+  | 方法名                                 | 说明                               |
+  | -------------------------------------- | ---------------------------------- |
+  | public static String toString(int[] a) | 返回指定数组的内容的字符串表示形式 |
+  | public static void sort(int[] a)       | 按照数字顺序排列指定的数组         |
+
+* 工具类设计思想
+
+  1、构造方法用 private 修饰
+
+  2、成员用 public static 修饰
