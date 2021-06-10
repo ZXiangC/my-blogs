@@ -673,6 +673,7 @@ public class StringBuilderTest02 {
 }
 ```
 
+<<<<<<< HEAD
 ## 四、Math
 
 * ### 1、Math类概述
@@ -742,3 +743,231 @@ public class StringBuilderTest02 {
   1、构造方法用 private 修饰
 
   2、成员用 public static 修饰
+=======
+## 四、Arrays
+
+### 1、Arrays.asList()使用指南
+
+#### 1）、简介
+
+`Arrays.asList()`在平时开发中还是比较常见的，我们可以使用它将一个数组转换为一个List集合。
+
+```java
+String[] myArray = {"Apple", "Banana", "Orange"};
+List<String> myList = Arrays.asList(myArray);
+//上面两个语句等价于下面一条语句
+List<String> myList = Arrays.asList("Apple","Banana", "Orange");Copy to clipboardErrorCopied
+```
+
+JDK 源码对于这个方法的说明：
+
+```java
+/**
+  *返回由指定数组支持的固定大小的列表。此方法作为基于数组和基于集合的API之间的桥梁，
+  * 与 Collection.toArray()结合使用。返回的List是可序列化并实现RandomAccess接口。
+  */
+public static <T> List<T> asList(T... a) {
+    return new ArrayList<>(a);
+}Copy to clipboardErrorCopied
+```
+
+#### 2）《阿里巴巴Java 开发手册》的描述
+
+`Arrays.asList()`将数组转换为集合后,底层其实还是数组，《阿里巴巴Java 开发手册》对于这个方法有如下描述：
+
+![阿里巴巴Java开发手-Arrays.asList()方法](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B-Arrays.asList()%E6%96%B9%E6%B3%95.png)
+
+#### 3）、使用时的注意事项总结
+
+**传递的数组必须是对象数组，而不是基本类型。**
+
+`Arrays.asList()`是泛型方法，传入的对象必须是对象数组。
+
+```java
+int[] myArray = {1, 2, 3};
+List myList = Arrays.asList(myArray);
+System.out.println(myList.size());//1
+System.out.println(myList.get(0));//数组地址值
+System.out.println(myList.get(1));//报错：ArrayIndexOutOfBoundsException
+int[] array = (int[]) myList.get(0);
+System.out.println(array[0]);//1Copy to clipboardErrorCopied
+```
+
+当传入一个原生数据类型数组时，`Arrays.asList()` 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时List 的唯一元素就是这个数组，这也就解释了上面的代码。
+
+我们使用包装类型数组就可以解决这个问题。
+
+```java
+Integer[] myArray = {1, 2, 3};Copy to clipboardErrorCopied
+```
+
+**使用集合的修改方法:`add()`、`remove()`、`clear()`会抛出异常。**
+
+```java
+List myList = Arrays.asList(1, 2, 3);
+myList.add(4);//运行时报错：UnsupportedOperationException
+myList.remove(1);//运行时报错：UnsupportedOperationException
+myList.clear();//运行时报错：UnsupportedOperationExceptionCopy to clipboardErrorCopied
+```
+
+`Arrays.asList()` 方法返回的并不是 `java.util.ArrayList` ，而是 `java.util.Arrays` 的一个内部类,这个内部类并没有实现集合的修改方法或者说并没有重写这些方法。
+
+```java
+List myList = Arrays.asList(1, 2, 3);
+System.out.println(myList.getClass());//class java.util.Arrays$ArrayListCopy to clipboardErrorCopied
+```
+
+下图是`java.util.Arrays$ArrayList`的简易源码，我们可以看到这个类重写的方法有哪些。
+
+```java
+  private static class ArrayList<E> extends AbstractList<E>
+        implements RandomAccess, java.io.Serializable
+    {
+        ...
+
+        @Override
+        public E get(int index) {
+          ...
+        }
+
+        @Override
+        public E set(int index, E element) {
+          ...
+        }
+
+        @Override
+        public int indexOf(Object o) {
+          ...
+        }
+
+        @Override
+        public boolean contains(Object o) {
+           ...
+        }
+
+        @Override
+        public void forEach(Consumer<? super E> action) {
+          ...
+        }
+
+        @Override
+        public void replaceAll(UnaryOperator<E> operator) {
+          ...
+        }
+
+        @Override
+        public void sort(Comparator<? super E> c) {
+          ...
+        }
+    }Copy to clipboardErrorCopied
+```
+
+我们再看一下`java.util.AbstractList`的`remove()`方法，这样我们就明白为啥会抛出`UnsupportedOperationException`。
+
+```java
+public E remove(int index) {
+    throw new UnsupportedOperationException();
+}Copy to clipboardErrorCopied
+```
+
+#### 4）、如何正确的将数组转换为ArrayList?
+
+stackoverflow：https://dwz.cn/vcBkTiTW
+
+**1. 自己动手实现（教育目的）**
+
+```java
+//JDK1.5+
+static <T> List<T> arrayToList(final T[] array) {
+  final List<T> l = new ArrayList<T>(array.length);
+
+  for (final T s : array) {
+    l.add(s);
+  }
+  return l;
+}Copy to clipboardErrorCopied
+Integer [] myArray = { 1, 2, 3 };
+System.out.println(arrayToList(myArray).getClass());//class java.util.ArrayListCopy to clipboardErrorCopied
+```
+
+**2. 最简便的方法(推荐)**
+
+```java
+List list = new ArrayList<>(Arrays.asList("a", "b", "c"))Copy to clipboardErrorCopied
+```
+
+**3. 使用 Java8 的Stream(推荐)**
+
+```java
+Integer [] myArray = { 1, 2, 3 };
+List myList = Arrays.stream(myArray).collect(Collectors.toList());
+//基本类型也可以实现转换（依赖boxed的装箱操作）
+int [] myArray2 = { 1, 2, 3 };
+List myList = Arrays.stream(myArray2).boxed().collect(Collectors.toList());Copy to clipboardErrorCopied
+```
+
+**4. 使用 Guava(推荐)**
+
+对于不可变集合，你可以使用[`ImmutableList`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java)类及其[`of()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L101)与[`copyOf()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L225)工厂方法：（参数不能为空）
+
+```java
+List<String> il = ImmutableList.of("string", "elements");  // from varargs
+List<String> il = ImmutableList.copyOf(aStringArray);      // from arrayCopy to clipboardErrorCopied
+```
+
+对于可变集合，你可以使用[`Lists`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java)类及其[`newArrayList()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java#L87)工厂方法：
+
+```java
+List<String> l1 = Lists.newArrayList(anotherListOrCollection);    // from collection
+List<String> l2 = Lists.newArrayList(aStringArray);               // from array
+List<String> l3 = Lists.newArrayList("or", "string", "elements"); // from varargsCopy to clipboardErrorCopied
+```
+
+**5. 使用 Apache Commons Collections**
+
+```java
+List<String> list = new ArrayList<String>();
+CollectionUtils.addAll(list, str);Copy to clipboardErrorCopied
+```
+
+**6. 使用 Java9 的 `List.of()`方法**
+
+```java
+Integer[] array = {1, 2, 3};
+List<Integer> list = List.of(array);
+System.out.println(list); /* [1, 2, 3] */
+/* 不支持基本数据类型 */Copy to clipboardErrorCopied
+```
+
+### 2、Arrays.copyOf()
+
+Arrays的copyOf()方法传回的数组是**新的数组对象**，改变传回数组中的元素值，不会影响原来的数组。
+
+copyOf()的第二个自变量指定要建立的**新数组长度**，如果新数组的长度**超过**原数组的长度，则**保留**数组默认值，例如：
+
+```java
+import java.util.Arrays;
+
+public class ArrayDemo {
+	public static void main(String[] args) {
+    	int[] arr1 = {1, 2, 3, 4, 5}; 
+    	int[] arr2 = Arrays.copyOf(arr1, 5);
+    	int[] arr3 = Arrays.copyOf(arr1, 10);
+    	for(int i = 0; i < arr2.length; i++) 
+        	System.out.print(arr2[i] + " "); 
+    		System.out.println();
+    	for(int i = 0; i < arr3.length; i++) 
+        	System.out.print(arr3[i] + " ");
+	}
+} 
+1234567891011121314
+```
+
+运行结果：
+
+```java
+1 2 3 4 5 
+1 2 3 4 5 0 0 0 0 0
+```
+
+>>>>>>> 2caf8bb3ad54e2510bb3b6103c3f44a221224cdd
