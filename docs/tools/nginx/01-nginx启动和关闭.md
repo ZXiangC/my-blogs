@@ -16,3 +16,8 @@
 -- 执行如下命令才可以停止
 nginx.exe -s stop 
 ```
+
+### 3 脚本启动和关闭
+
+[参考链接](https://www.cnblogs.com/badaoliumangqizhi/p/13587747.html)
+
