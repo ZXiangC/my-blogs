@@ -47,4 +47,13 @@
 <3>对满足集合与过滤后的b表进行关联，不满足集后面字段直接补null，最后将两个集合union起来成最终结果集
 ```
 
+### 2、sql语句优化
+
+[语句优化](https://www.cnblogs.com/xupccc/p/9661972.html)
+
+[语句优化2](https://blog.csdn.net/qq_38789941/article/details/83744271)
+
+[这哥们最好用](https://blog.csdn.net/qq_39390545/article/details/107020686?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522162434649916780262567346%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=162434649916780262567346&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-107020686.first_rank_v2_pc_rank_v29&utm_term=sql+%E4%BC%98%E5%8C%96&spm=1018.2226.3001.4187)
+
+[这里面是一个体系](https://blog.csdn.net/qq_39390545/article/details/107786761)
 
