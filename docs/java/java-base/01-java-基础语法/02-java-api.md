@@ -706,10 +706,6 @@ public class StringBuilderTest02 {
 | public   static void exit(int status)    | 终止当前运行的   Java   虚拟机，非零表示异常终止 |
 | public   static long currentTimeMillis() | 返回当前时间(以毫秒为单位)                       |
 
-* 
-
-* 
-
 * 示例代码
 
   * 需求：在控制台输出1-10000，计算这段代码执行了多少毫秒 
@@ -731,20 +727,12 @@ public class StringBuilderTest02 {
 
 ## 六、Arrays
 
-* Arrays的常用方法
+Arrays的常用方法
 
-  | 方法名                                 | 说明                               |
-  | -------------------------------------- | ---------------------------------- |
-  | public static String toString(int[] a) | 返回指定数组的内容的字符串表示形式 |
-  | public static void sort(int[] a)       | 按照数字顺序排列指定的数组         |
-
-* 工具类设计思想
-
-  1、构造方法用 private 修饰
-
-  2、成员用 public static 修饰
-=======
-## 四、Arrays
+| 方法名                                 | 说明                               |
+| -------------------------------------- | ---------------------------------- |
+| public static String toString(int[] a) | 返回指定数组的内容的字符串表示形式 |
+| public static void sort(int[] a)       | 按照数字顺序排列指定的数组         |
 
 ### 1、Arrays.asList()使用指南
 
@@ -970,4 +958,51 @@ public class ArrayDemo {
 1 2 3 4 5 0 0 0 0 0
 ```
 
->>>>>>> 2caf8bb3ad54e2510bb3b6103c3f44a221224cdd
+## 七、Random
+
+### 1、常用函数
+
+| 函数          | 范围    | 说明                                                         |
+| ------------- | ------- | ------------------------------------------------------------ |
+| nextInt(x)    | [0,x)   | 生成 0 ~x 范围内的值                                         |
+| nextDouble()  | [0,1.0) | 在0.0和1.0之间均匀分布的 double值。                          |
+| nextBoolean() |         | 返回下一个伪随机数，它是取自此随机数生成器序列的均匀分布的boolean值。 |
+
+### 2、案例一：生成 100~1000 范围内的值
+
+- 900 = 1000 - 100
+- 100 = 100 - 0
+
+> 总结：生成 x ~ y 之间的随机数  
+>
+>  new Random.nextInt(y-x) + x 
+
+```java
+import java.util.Random;
+
+public class Test {
+	public static void main(String[] args) {
+		Random r = new Random();
+		int temp = r.nextInt(900)+100;
+	    System.out.println(temp);
+	}
+}
+```
+
+### 3、案例二： 生成[1,2.5)区间的小数
+
+> 总结：生成 x ~ y 之间的随机小数  
+>
+>  new Random.nextDouble() *(y-x) + x 
+
+```java
+import java.util.Random;
+
+public class Test {
+	public static void main(String[] args) {
+		Random r = new Random();
+	    double temp=  r.nextDouble() * 1.5 + 1 ;
+	    System.out.println(temp);
+	}
+}
+```
