@@ -1,6 +1,6 @@
 ### 1 全要素全部过程
 
-```sql
+```java
 SP_RPT_CBRC_TPROJDCFMONITOR
 SP_RPT_CBRC_TPROJFULLFACTORCHE
 sp_rpt_cbrc_tProjFullFactorCol

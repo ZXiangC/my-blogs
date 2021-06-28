@@ -14,16 +14,12 @@
   * [java-frame](java/java-frame/_sidebar.md)
   * [java-tools](java/java-tools/_sidebar.md)
 - 项目
-  - [谷粒商城](item/guli/_sidebar.md)
 
 * 数据库
   * [Mysql](zh-cn/configuration.md)
   * [Oracle](data-base/oracle/_sidebar.md)
   
-*  company
-  * [hs](hs/_sidebar.md)
-  * [斯特沃克](hs/_sidebar.md) 
-    
+  
   
 
 

@@ -958,6 +958,8 @@ public class ArrayDemo {
 1 2 3 4 5 0 0 0 0 0
 ```
 
+
+
 ## 七、Random
 
 ### 1、常用函数
