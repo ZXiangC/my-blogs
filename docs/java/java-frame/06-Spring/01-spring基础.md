@@ -271,9 +271,68 @@ scope:指对象的作用范围，取值如下：
 
 ### 3.3 Bean生命周期配置
 
-init-method：指定类中的初始化方法名称
+[参考链接本文记录](https://blog.csdn.net/cool_summer_moon/article/details/106149339?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522162540806516780255278237%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=162540806516780255278237&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-106149339.pc_search_result_control_group&utm_term=bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F&spm=1018.2226.3001.4187)
 
-destroy-method：指定类中销毁方法名称
+[这个讲清楚了](https://blog.csdn.net/fuzhongmin05/article/details/73389779?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522162540974116780262569562%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=162540974116780262569562&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-73389779.pc_search_result_control_group&utm_term=%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%98%AF%E5%8D%95%E4%BE%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E7%9A%84Bean%EF%BC%8CSpring%E5%AF%B9%E5%85%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%98%AF%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E7%9A%84%EF%BC%9F&spm=1018.2226.3001.4187)
+
+面试中经常会被问到Spring Bean的生命周期，有些人说记不住，看了一遍源码也是云里雾里的，那是因为只看理论，没有自己实践，如果自己亲自写代码验证一下，不管是对Spring的宏观感受，还是微观的感觉，都会有进一步的理解。
+
+2、结果分析
+2.1、上面的结果，我们可以初步分四个阶段：
+
+Bean的实例化阶段 
+Bean的设置属性阶段 
+Bean的 初始化阶段 
+Bean的销毁阶段 
+2.2、在初始化阶段，有个特别重要的接口BeanPostProcessor，在初始化前、后调用：
+
+![在这里插入图片描述](https://gitee.com/ZXiangC/picture/raw/master/imgs/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nvb2xfc3VtbWVyX21vb24=,size_16,color_FFFFFF,t_70)
+
+2.3、在设置属性阶段后，postProcessBeforeInitialization方法执行前，会执行很多Aware类型的接口，这种类型接口作用是加载资源到Spring容器中，Aware前面的名字就对应哪种资源，依次加载的是：
+
+BeanNameAware  
+
+- BeanClassLoaderAware  
+- BeanFactoryAware   
+- EnvironmentAware  
+- ResourceLoaderAware  
+
+- ApplicationEventPublisherAware  
+- ApplicationContextAware  
+  看到这里应该明白BeanFactory和ApplicationContext的区别了：
+  BeanFactoryAware之前加载的资源都是公共的。BeanFactoryAware后面加载的资源都是ApplicationContext独有的。
+
+2.4、初始化方式有三个，分别是：
+
+InitializingBean的afterPropertiesSet方法
+PostConstruct注解标注的方法
+配置的init-method
+上面的三个方法效果都是一样的，开发中选择其中一种方式就行，一般我们选择2、3方法中的一个。
+
+2.5、容器销毁的方式有三个，分别是：
+
+preDestroy注解标注的方法
+DisposableBean接口的destroy方法
+配置的destroy-method
+上面的三个方法效果都是一样的，开发中选择其中一种方式就行，一般我们选择1、3方法中的一个。
+
+3、总结
+综合前面的代码和分析，现在我们用大白话描述下：
+
+Bean容器找到Spring配置文件中Bean的定义；
+Bean容器利用java 反射机制实例化Bean；
+Bean容器为实例化的Bean设置属性值；
+如果Bean实现了BeanNameAware接口，则执行setBeanName方法；
+如果Bean实现了BeanClassLoaderAware接口，则执行setBeanClassLoader方法；
+如果Bean实现了BeanFactoryAware接口，则执行setBeanFactory方法；
+如果 ……真的，到这我经常忘记，但前面三个Aware接口肯定能记住；
+如果Bean实现了ApplicationContextAware接口，则执行setApplicationContext方法；
+如果加载了BeanPostProcessor相关实现类，则执行postProcessBeforeInitialization方法；
+如果Bean实现了InitializingBean接口，则执行afterPropertiesSet方法；
+如果Bean定义初始化方法（PostConstruct注解或者配置的init-method），则执行定义的初始化方法；
+如果加载了BeanPostProcessor相关实现类，则执行postProcessAfterInitialization方法；
+当要销毁这个Bean时，如果Bean实现了DisposableBean接口，则执行destroy方法。
+当要销毁这个Bean时，如果自定义了销毁方法（PreDestroy注解或者配置destroy-method），则执行定义的销毁方法。
 
 ### 3.4 Bean实例化三种方式
 

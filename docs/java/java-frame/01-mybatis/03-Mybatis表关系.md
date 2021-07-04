@@ -16,8 +16,6 @@
 
 查询的结果如下：
 
-![](C:/Users/%E7%A5%A5%E5%AD%90/Desktop/%E5%9B%BE%E7%89%872.png)
-
 ##### 1.1.3 创建Order和User实体
 
 ```java
