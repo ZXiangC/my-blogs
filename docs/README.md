@@ -16,3 +16,20 @@
 [<img src="Images/百度翻译.png" height="32" width="32"><font size=5>百度翻译</font>](https://fanyi.baidu.com/?aldtype=16047#auto/zh/)&emsp;&emsp;&emsp;&emsp;
 
 [PdfToMarkDown](https://pdf2md.morethan.io/)
+
+
+
+- 优秀的博客
+
+  [陌溪学习笔记](https://moxi159753.gitee.io/learningnotes/#/)
+
+  [javaGuid](https://snailclimb.gitee.io/javaguide/#/)
+
+  [doocs](https://github.com/doocs/advanced-java)
+
+  [java成神](https://github.com/hollischuang/toBeTopJavaer)
+
+  [cyc2018](https://github.com/CyC2018/CS-Notes)
+
+
+
