@@ -14,14 +14,13 @@
   * [java-frame](java/java-frame/_sidebar.md)
   * [java-tools](java/java-tools/_sidebar.md)
   * [java常见面试题](java/java-inerview/_sidebar.md)
+
 - 项目
 
 * 数据库
-  * [Mysql](zh-cn/configuration.md)
+
+  * [Mysql](data-base/mysql/_sidebar.md)
   * [Oracle](data-base/oracle/_sidebar.md)
-  
-  
-  
 
-
+  
 
