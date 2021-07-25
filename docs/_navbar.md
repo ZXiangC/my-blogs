@@ -4,10 +4,10 @@
   - [Docsify文档](zh-cn/_sidebar.md)
 
 * 工具
-  * [Idea](tools/idea/_sidebar.md)
-  * [Vs_code](tools/vs-code/_sidebar.md)
-  * [Git](tools/git/_sidebar.md)
-  * [others](tools/others/_sidebar.md)
+  * [IDEA](tools/idea/_sidebar.md)
+  * [VS](tools/vs-code/_sidebar.md)
+  * [GIT](tools/git/_sidebar.md)
+  * [Others](tools/others/_sidebar.md)
 
 * Java
   * [java-base](java/java-base/_sidebar.md)
