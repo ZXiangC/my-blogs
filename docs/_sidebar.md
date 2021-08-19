@@ -15,20 +15,12 @@
   * [java-tools](java/java-tools/_sidebar.md)
   * [java常见面试题](java/java-inerview/_sidebar.md)
 
-- 项目
-
 * 数据库
-<<<<<<< HEAD
-
-  * [Mysql](zh-cn/configuration.md)
-  * [Oracle](data-base/oracle/_sidebar.md)
-
-  
-=======
->>>>>>> a2def979a342834b69a2fa0de863f2f5adb34488
-
   * [Mysql](data-base/mysql/_sidebar.md)
   * [Oracle](data-base/oracle/_sidebar.md)
 
-  
+- 生活
+  - [买房买车](life/_sidebar.md)
+
+
 

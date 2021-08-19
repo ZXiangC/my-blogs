@@ -14,11 +14,12 @@
   * [java-frame](java/java-frame/_sidebar.md)
   * [java-tools](java/java-tools/_sidebar.md)
   * [java常见面试题](java/java-inerview/_sidebar.md)
-- 项目
-
 * 数据库
   * [Mysql](data-base/mysql/_sidebar.md)
   * [Oracle](data-base/oracle/_sidebar.md)
-  
-  
+
+- 生活
+  - [买房买车](life/_sidebar.md)
+
+
 
